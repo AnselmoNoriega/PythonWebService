@@ -4,7 +4,7 @@ import time
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/senddata', methods = ['POST'])
 def receive_data():
     data = request.get_json()
     if not data:
