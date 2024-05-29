@@ -10,10 +10,11 @@ def receive_data():
     if not data:
         return jsonify({'error': 'No JSON payload provided'}), 400
 
-    assistantID = "asst_XOyqJAlc7oJuEKCa1blkFyT7"
+    keyID = data.get('KeyID')
+    assistantID = data.get('ID')
     prompt = data.get('Prompt')
     
-    client = OpenAI(api_key = "sk-proj-WdU4lzBEwLsZ5WDgSoaDT3BlbkFJOrgeuw3cBH18I7Bh5nI4")
+    client = OpenAI(api_key = keyID)
     
     thread = client.beta.threads.create()
 
