@@ -10,10 +10,13 @@ def receive_data():
     if not data:
         return jsonify({'error': 'No JSON payload provided'}), 400
 
+    api_key = ""
     api_key = data.get('ApiKey')
-    ASSISTANT_ID = data.get('AssistentID')
+    assistantID = ""
+    assistantID  = data.get('AssistentID')
+    prompt = ""
     prompt = data.get('Prompt')
-
+    
     client = OpenAI(api_key)
     
     thread = client.beta.threads.create()
@@ -26,16 +29,14 @@ def receive_data():
 
     run = client.beta.threads.runs.create(
         thread_id = thread.id,
-        assistant_id = ASSISTANT_ID
+        assistant_id = assistantID
     )
 
     while run.status != "completed":
         run = client.beta.threads.runs.retrieve(thread_id = thread.id, run_id = run.id)
         time.sleep(1)
 
-    messages = client.beta.threads.messages.list(
-    thread_id = thread.id
-    )
+    messages = client.beta.threads.messages.list(thread_id = thread.id)
 
     for it in reversed(messages.data):
         return jsonify(it.content[0].text.value)
