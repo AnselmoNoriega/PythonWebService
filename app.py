@@ -13,7 +13,7 @@ def receive_data():
     assistantID = "asst_XOyqJAlc7oJuEKCa1blkFyT7"
     prompt = data.get('Prompt')
     
-    client = OpenAI("sk-proj-WdU4lzBEwLsZ5WDgSoaDT3BlbkFJOrgeuw3cBH18I7Bh5nI4")
+    client = OpenAI(api_key = "sk-proj-WdU4lzBEwLsZ5WDgSoaDT3BlbkFJOrgeuw3cBH18I7Bh5nI4")
     
     thread = client.beta.threads.create()
 
