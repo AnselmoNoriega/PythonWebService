@@ -10,7 +10,7 @@ def receive_data():
     if not data:
         return jsonify({'error': 'No JSON payload provided'}), 400
 
-    keyID = "sk-proj-RGIngscXZrTAXlHZ6okST3BlbkFJwAwB6YlZGN6ClvQQyxKn"
+    keyID = "sk-proj-L9as9LYyy29UcxyOV2uMT3BlbkFJgNNyoFURSUwxddl0wQPm"
     assistantID = "asst_XOyqJAlc7oJuEKCa1blkFyT7"
     prompt = data.get('Prompt')
     
