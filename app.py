@@ -10,8 +10,8 @@ def receive_data():
     if not data:
         return jsonify({'error': 'No JSON payload provided'}), 400
 
-    keyID = data.get('KeyID')
-    assistantID = data.get('ID')
+    keyID = "sk-proj-RGIngscXZrTAXlHZ6okST3BlbkFJwAwB6YlZGN6ClvQQyxKn"
+    assistantID = "asst_XOyqJAlc7oJuEKCa1blkFyT7"
     prompt = data.get('Prompt')
     
     client = OpenAI(api_key = keyID)
