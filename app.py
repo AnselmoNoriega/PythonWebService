@@ -12,7 +12,6 @@ def receive_data():
 
     keyID = "sk-proj-UJlJP7IIAccXodn8iARnT3BlbkFJV8PWozcARMGmt2Gf7CA7"
     assistantID = "asst_XOyqJAlc7oJuEKCa1blkFyT7"
-    prompt = data.get('Prompt')
     promptHistory = data.get('PromptHistory')
     
     client = OpenAI(api_key = keyID)
@@ -37,8 +36,7 @@ def receive_data():
 
     messages = client.beta.threads.messages.list(thread_id = thread.id)
 
-    for it in reversed(messages.data):
-        if it.content[0].text.value != prompt:
+    for it in messages.data:
             return jsonify(it.content[0].text.value)
     
     return jsonify(run.status)
