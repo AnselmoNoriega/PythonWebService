@@ -37,8 +37,6 @@ def receive_data():
     messages = client.beta.threads.messages.list(thread_id = thread.id)
 
     for it in reversed(messages.data):
-        for prevPromt in promptHistory:
-            if it.content[0].text.value != prevPromt:
-                return jsonify(it.content[0].text.value)
+            return jsonify(messages.data)
     
     return jsonify(run.status)
