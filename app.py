@@ -36,8 +36,4 @@ def receive_data():
 
     messages = client.beta.threads.messages.list(thread_id = thread.id)
 
-    stri = ["start", "second"]
-    for it in reversed(messages.data):
-        stri.append(it.content[0].text.value)
-    return jsonify(stri)
-    return jsonify(run.status)
+    return jsonify(messages.data[-1].content[0].text.value)
