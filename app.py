@@ -33,9 +33,12 @@ def receive_data():
     while run.status != "completed":
         run = client.beta.threads.runs.retrieve(thread_id = thread.id, run_id = run.id)
         time.sleep(1)
-
+        
     messages = client.beta.threads.messages.list(thread_id = thread.id)
 
+    stri = []
+    for it in messages.data:
+        stri.append(it.content[0].text.value)
+    return jsonify(stri)
+
     return jsonify(messages.data)
-    
-    return jsonify(run.status)
