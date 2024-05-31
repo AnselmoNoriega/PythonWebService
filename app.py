@@ -4,7 +4,7 @@ from openai import OpenAI
 
 app = Flask(__name__)
 
-@app.route('/', methods = ['POST'])
+@app.route('/senddata', methods = ['POST'])
 def receive_data():
     data = request.get_json()
     if not data:
@@ -12,7 +12,7 @@ def receive_data():
 
     keyID = "sk-proj-UJlJP7IIAccXodn8iARnT3BlbkFJV8PWozcARMGmt2Gf7CA7"
     assistantID = "asst_XOyqJAlc7oJuEKCa1blkFyT7"
-    prompt = data.get('PromptHistory')
+    prompt = data.get('Prompt')
     threadID = data.get('ThreadID')
     
     client = OpenAI(api_key = keyID)
@@ -39,7 +39,7 @@ def receive_data():
 
     return jsonify(messages.data[0].content[0].text.value)
 
-@app.route('/', methods = ['GET'])
+@app.route('/getdata', methods = ['GET'])
 def send_data():
     keyID = "sk-proj-UJlJP7IIAccXodn8iARnT3BlbkFJV8PWozcARMGmt2Gf7CA7"
     client = OpenAI(api_key = keyID)
