@@ -36,7 +36,9 @@ def receive_data():
 
     messages = client.beta.threads.messages.list(thread_id = thread.id)
 
-    middleNum = (len(promptHistory)) - 1
-    return jsonify(str(middleNum) + ": " + messages.data[middleNum].content[0].text.value)
+    stri = []
+    for it in messages.data:
+        stri.append(it.content[0].text.value)
+    return jsonify(stri)
     
     return jsonify(run.status)
