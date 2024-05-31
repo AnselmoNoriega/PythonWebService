@@ -12,18 +12,19 @@ def receive_data():
 
     keyID = "sk-proj-UJlJP7IIAccXodn8iARnT3BlbkFJV8PWozcARMGmt2Gf7CA7"
     assistantID = "asst_XOyqJAlc7oJuEKCa1blkFyT7"
-    promptHistory = data.get('PromptHistory')
+    prompt = data.get('PromptHistory')
+    threadID = data.get('ThreadID')
     
     client = OpenAI(api_key = keyID)
     
     thread = client.beta.threads.create()
+    thread.id = threadID
 
-    for prevPromt in promptHistory:
-        client.beta.threads.messages.create(
-            thread_id = thread.id,
-            role = "user",
-            content = prevPromt
-        )
+    client.beta.threads.messages.create(
+        thread_id = thread.id,
+        role = "user",
+        content = prompt
+    )
 
     run = client.beta.threads.runs.create(
         thread_id = thread.id,
@@ -37,3 +38,10 @@ def receive_data():
     messages = client.beta.threads.messages.list(thread_id = thread.id)
 
     return jsonify(messages.data[0].content[0].text.value)
+
+@app.route('/', methods = ['GET'])
+def send_data():
+    keyID = "sk-proj-UJlJP7IIAccXodn8iARnT3BlbkFJV8PWozcARMGmt2Gf7CA7"
+    client = OpenAI(api_key = keyID)
+    id = client.beta.threads.create().id
+    return jsonify(id)
