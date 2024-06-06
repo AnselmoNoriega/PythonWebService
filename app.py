@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import time
 from openai import OpenAI
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/senddata', methods = ['POST'])
 def receive_data():
