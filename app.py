@@ -59,11 +59,11 @@ def convert_bytes_to_floats():
         channels=1 
     )
     
-    mp3_io = io.BytesIO()
-    audio_segment.export(mp3_io, format="mp3")
-    mp3_io.seek(0)
+    wav_io = io.BytesIO()
+    audio_segment.export(wav_io, format="wav")
+    wav_io.seek(0)
     
-    return send_file(mp3_io, mimetype='audio/mpeg')
+    return send_file(wav_io, mimetype='audio/wav')
 
 @app.route('/getdata', methods = ['GET'])
 def send_data():
