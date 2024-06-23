@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import time
 from openai import OpenAI
+import struct
 
 app = Flask(__name__)
 CORS(app)
@@ -40,6 +41,15 @@ def receive_data():
     messages = client.beta.threads.messages.list(thread_id = thread.id)
 
     return jsonify(messages.data[0].content[0].text.value)
+
+@app.route('/convert', methods=['POST'])
+def convert_bytes_to_floats():
+    byte_array = request.get_data()
+    
+    num_floats = len(byte_array) // 4
+    float_array = struct.unpack('f' * num_floats, byte_array)
+    
+    return jsonify(float_array)
 
 @app.route('/getdata', methods = ['GET'])
 def send_data():
