@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import time
 from openai import OpenAI
@@ -59,11 +59,11 @@ def convert_bytes_to_floats():
         channels=1 
     )
     
-    wav_io = io.BytesIO()
-    audio_segment.export(wav_io, format="wav")
-    wav_io.seek(0)
+    mp3_io = io.BytesIO()
+    audio_segment.export(mp3_io, format="mp3")
+    mp3_io.seek(0)
     
-    return send_file(wav_io, mimetype='audio/wav')
+    return mp3_io
 
 @app.route('/getdata', methods = ['GET'])
 def send_data():
