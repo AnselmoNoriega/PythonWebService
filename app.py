@@ -1,8 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import time
 from openai import OpenAI
 import struct
+from pydub import AudioSegment
+import io
 
 app = Flask(__name__)
 CORS(app)
@@ -49,7 +51,19 @@ def convert_bytes_to_floats():
     num_floats = len(byte_array) // 4
     float_array = struct.unpack('f' * num_floats, byte_array)
     
-    return jsonify(float_array)
+    sample_rate = 44100
+    audio_segment = AudioSegment(
+        data=byte_array,
+        sample_width=4, 
+        frame_rate=sample_rate,
+        channels=1 
+    )
+    
+    mp3_io = io.BytesIO()
+    audio_segment.export(mp3_io, format="mp3")
+    mp3_io.seek(0)
+    
+    return send_file(mp3_io, mimetype='audio/mpeg')
 
 @app.route('/getdata', methods = ['GET'])
 def send_data():
