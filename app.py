@@ -46,9 +46,9 @@ def receive_data():
 
 @app.route('/convert', methods=['POST'])
 def convert_bytes_to_floats():
-    byte_array = request.get_data()
-    
-    mp3_audio = AudioSegment.from_file(io.BytesIO(byte_array), format='mp3')
+    mp3_data = request.data
+        
+    mp3_audio = AudioSegment.from_file(io.BytesIO(mp3_data), format='mp3')
     
     wav_data = mp3_audio.set_frame_rate(44100).set_channels(2).raw_data(convert_to="WAV")
     
