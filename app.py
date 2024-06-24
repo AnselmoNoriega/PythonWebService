@@ -46,15 +46,19 @@ def receive_data():
 
 @app.route('/convert', methods=['POST'])
 def convert_bytes_to_floats():
-    mp3_data = request.data
+    try:
+        mp3_data = request.data
         
-    mp3_audio = AudioSegment.from_file(io.BytesIO(mp3_data), format='mp3')
+        mp3_audio = AudioSegment.from_file(io.BytesIO(mp3_data), format='mp3')
+        
+        wav_data = io.BytesIO()
+        mp3_audio.export(wav_data, format="wav")
+
+        wav_data.seek(0)
+        return send_file(wav_data, mimetype="audio/wav", as_attachment=True, download_name="converted.wav")
     
-    wav_data = io.BytesIO()
-    mp3_audio.export(wav_data, format="wav")
-    
-    wav_data.seek(0)
-    return send_file(wav_data, mimetype="audio/wav", as_attachment=True, attachment_filename="converted.wav")
+    except Exception as e:
+        return str(e), 400
     
 
 @app.route('/getdata', methods = ['GET'])
